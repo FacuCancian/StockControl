@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "32882534459",
+    "project_id": "stockcontrol-1fff9",
+    "storage_bucket": "stockcontrol-1fff9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32882534459:android:1913f4e4b1ad5118c8941e",
+        "android_client_info": {
+          "package_name": "com.example.stockcontrol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32882534459-18d5bb3g733id84d5i9kqa7aeeunsume.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stockcontrol",
+            "certificate_hash": "387d8fbbccafa232d8859f67a1f6dfa039d23105"
+          }
+        },
+        {
+          "client_id": "32882534459-clda82bvq5gp73paq0jrr87vo1i938e4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBztwIJ_zJIjqSc0-er4zb-0Yp0k29IlmU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32882534459-clda82bvq5gp73paq0jrr87vo1i938e4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

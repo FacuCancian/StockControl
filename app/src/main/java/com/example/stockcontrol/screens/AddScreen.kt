@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.stockcontrol.model.Items
@@ -36,7 +38,6 @@ import com.example.stockcontrol.viewModel.ProductViewModel
 
 @Composable
 fun AddProduct(navController: NavController, productViewModel: ProductViewModel) {
-
     var id by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -59,60 +60,82 @@ fun AddProduct(navController: NavController, productViewModel: ProductViewModel)
                 text = "NUEVO PRODUCTO",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 64.dp),
+                modifier = Modifier.padding(top = 32.dp, bottom = 32.dp),
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    InputRow(label = "ID:", value = id, onValueChange = { id = it })
-                    InputRow(
-                        label = "DESCRIPCIÓN:",
-                        value = description,
-                        onValueChange = { description = it },
-                        modifier = Modifier.height(120.dp)
-                    )
-                    InputRow(label = "PRECIO:", value = price, onValueChange = { price = it })
 
-                    InputRow(label = "STOCK:", value = stock, onValueChange = { stock = it })
-                    Button(onClick = {
-                        val idValue = id.toIntOrNull()
-                        if (idValue != null && price.isNotBlank() && description.isNotBlank() && stock.isNotBlank()) {
-                            val priceValue = price.toDoubleOrNull()
-                            val stockValue = stock.toIntOrNull()
-                            if (priceValue != null && stockValue != null && priceValue > 0 && stockValue >= 0) {
-                                val product =
-                                    Items(idValue, description, price.toDouble(), stock.toInt())
-                                productViewModel.insertProduct(
-                                    product,
-                                   )
-                                Toast.makeText(context, "Producto Agregado", Toast.LENGTH_SHORT)
-                                    .show()
-                                navController.navigate("home")
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "Precio debe ser mayor a 0 y Stock debe ser entro mayor a 0",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+            OutlinedTextField(
+                value = id,
+                onValueChange = { id = it },
+                label = { Text("ID") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Descripción") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+                    .height(120.dp),
+                maxLines = 4
+            )
+
+
+            OutlinedTextField(
+                value = price,
+                onValueChange = { price = it },
+                label = { Text("Precio") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+
+            OutlinedTextField(
+                value = stock,
+                onValueChange = { stock = it },
+                label = { Text("Stock") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                onClick = {
+                    val idValue = id.toIntOrNull()
+                    if (idValue != null && price.isNotBlank() && description.isNotBlank() && stock.isNotBlank()) {
+                        val priceValue = price.toDoubleOrNull()
+                        val stockValue = stock.toIntOrNull()
+                        if (priceValue != null && stockValue != null && priceValue > 0 && stockValue >= 0) {
+                            val product = Items(idValue, description, priceValue, stockValue)
+                            productViewModel.insertProduct(product)
+                            Toast.makeText(context, "Producto Agregado", Toast.LENGTH_SHORT).show()
+                            navController.navigate("home")
                         } else {
                             Toast.makeText(
                                 context,
-                                "Todos los campos son obligatorios",
+                                "Precio debe ser mayor a 0 y Stock debe ser entero mayor o igual a 0 o sin espacios",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    }) {
-                        Text("AGREGAR", color = MaterialTheme.colorScheme.onSurface)
+                    } else {
+                        Toast.makeText(context, "Todos los campos son obligatorios", Toast.LENGTH_LONG).show()
                     }
-                }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("AGREGAR")
             }
         }
     }

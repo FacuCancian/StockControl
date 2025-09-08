@@ -12,6 +12,8 @@ import kotlinx.coroutines.tasks.await
 class ItemRepository(private val productDao: ProductDao, private val firestore: FirebaseFirestore) {
 
     private val productCollection = firestore.collection("products")
+
+
     fun getProducts(): Flow<List<Items>> = productDao.getAllProducts()
 
     suspend fun insertProduct(product: Items){
@@ -56,7 +58,7 @@ class ItemRepository(private val productDao: ProductDao, private val firestore: 
                 Log.d("room", "Productos insertados en Room")
             }
         } catch (e: Exception) {
-            Log.e("ProductRepository", "Error al obtener productos de Firestore, usando Room", e)
+            Log.e("ProductRepository", "Error al obtener productos de Firebase, usando Room", e)
         }
     }
 
